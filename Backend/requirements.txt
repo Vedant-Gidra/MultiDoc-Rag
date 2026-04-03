@@ -1,0 +1,43 @@
+# Core
+langchain
+langchain-community
+langchain-core
+langchain-ollama
+langchain-chroma
+langchain-groq
+
+
+# Embeddings + Models
+sentence-transformers
+transformers
+torch
+
+# Vector DB
+chromadb
+
+# PDF Processing
+pypdf
+
+# Multi-query + utilities
+numpy
+scikit-learn
+
+# RAG Evaluation
+# ragas
+
+
+python-dotenv
+
+fastapi
+python-multipart
+
+# Authentication
+PyJWT
+bcrypt
+pydantic
+
+# Database
+sqlalchemy
+
+
+
