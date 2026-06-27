@@ -74,14 +74,22 @@ Implement a FastAPI backend with:
 
 
 ## Usage
-1. Create `.env` with keys:
+1. Copy env files:
+   - `Backend/.env` from `Backend/.env.example`
+   - `Frontend/.env` from `Frontend/.env.example` (optional for local dev)
+2. Required backend keys:
    - `SECRET_KEY` (secure random string)
+   - `GROQ_API_KEY` (from [console.groq.com](https://console.groq.com))
    - `DATABASE_URL=sqlite:///./app.db`
-   - `API_PORT=8000`
-2. Install backend deps: `pip install -r Backend/requirements.txt`
-3. Start backend: `cd Backend && uvicorn app.main:app --reload`
-4. Start frontend: `cd Frontend && npm install && npm run dev`
-5. Open browser at `http://localhost:5173`
+   - `CORS_ORIGINS` (comma-separated frontend URLs)
+3. Install [Ollama](https://ollama.com) locally and run: `ollama pull nomic-embed-text`
+4. Install backend deps: `pip install -r Backend/requirements.txt`
+5. Start backend: `cd Backend && uvicorn app.main:app --reload`
+6. Start frontend: `cd Frontend && npm install && npm run dev`
+7. Open browser at `http://localhost:5173`
+
+## Deployment
+See **[deploy/DEPLOYMENT.md](deploy/DEPLOYMENT.md)** for the full AWS EC2 + Vercel guide (dashboard steps, PowerShell, and SSH commands).
 
 ## Future Directions
 - Add rich user profile settings and enterprise role-based access (RBAC).

@@ -1,0 +1,17 @@
+[Unit]
+Description=MultiDocRAG FastAPI backend (AWS EC2 Ubuntu)
+After=network.target ollama.service
+Wants=ollama.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/MultiDocRag/Backend
+Environment="PATH=/home/ubuntu/MultiDocRag/Backend/venv/bin"
+ExecStart=/home/ubuntu/MultiDocRag/Backend/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

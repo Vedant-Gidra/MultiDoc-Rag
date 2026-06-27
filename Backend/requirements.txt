@@ -22,14 +22,11 @@ pypdf
 numpy
 scikit-learn
 
-# RAG Evaluation
-# ragas
-
-
 python-dotenv
 
 fastapi
 python-multipart
+uvicorn[standard]
 
 # Authentication
 PyJWT

@@ -7,6 +7,7 @@ import Signup from './Components/Signup';
 import SideBar from './Components/SideBar';
 import QueryBox from './Components/QueryBox';
 import ReplyBox from './Components/ReplyBox';
+import { API_BASE_URL } from './config';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -15,8 +16,6 @@ function App() {
   const [queryError, setQueryError] = useState(null);
   const [authMode, setAuthMode] = useState('login');
   const { user, token, loading } = useAuth();
-
-  const API_BASE_URL = 'http://127.0.0.1:8000';
 
   useEffect(() => {
     // Clear UI state on user change (logout/login switch accounts)
