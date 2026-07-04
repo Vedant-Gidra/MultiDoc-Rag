@@ -12,7 +12,7 @@ Browser → Vercel (React)
          Groq API (LLM answers)
 ```
 
-**Estimated cost:** $0 on AWS Free Tier (t2.micro, 12 months) + Vercel free + Groq free tier.
+**Estimated cost:** $0 on AWS Free Tier (t3.micro, 12 months) + Vercel free + Groq free tier.
 
 ---
 
@@ -45,7 +45,7 @@ Before you start, have these ready:
 | Vercel account | [vercel.com](https://vercel.com) → sign in with GitHub |
 | Domain (optional) | For HTTPS; you can use raw EC2 IP first |
 
-**Recommended EC2 instance:** `t2.micro` (Free Tier, 1 GB RAM). Ollama works but is slow — we add **2 GB swap** in Part 4.
+**Recommended EC2 instance:** `t3.micro` (Free Tier). Ollama works but is slow — we add **2 GB swap** in Part 4.
 
 ---
 
@@ -129,7 +129,7 @@ Pick a region close to you (top-right, e.g. **Asia Pacific (Mumbai) ap-south-1**
 | Field | Value |
 |-------|--------|
 | **Name** | `multidocrag-api` |
-| **Application and OS Images (AMI)** | **Ubuntu Server 22.04 LTS (HVM), SSD Volume Type** |
+| **Application and OS Images (AMI)** | **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type** |
 | **Architecture** | 64-bit (x86) |
 | **Free tier eligible** | Should show "Free tier eligible" badge |
 
@@ -137,9 +137,9 @@ Pick a region close to you (top-right, e.g. **Asia Pacific (Mumbai) ap-south-1**
 
 | Field | Value |
 |-------|--------|
-| **Instance type** | **t2.micro** (1 vCPU, 1 GiB RAM) — Free Tier |
+| **Instance type** | **t3.micro** (2 vCPU, 1 GiB RAM) — Free Tier |
 
-> t2.micro is enough for a resume demo. First PDF upload may take 1–2 minutes while Ollama embeds chunks.
+> `t3.micro` is enough for a resume demo. First PDF upload may take 1–2 minutes while Ollama embeds chunks.
 
 ### Step 2.4 — Key pair (login)
 
@@ -246,9 +246,9 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3-pip python3-venv nginx git certbot python3-certbot-nginx curl
 ```
 
-### 4.2 Add swap (required on t2.micro for Ollama)
+### 4.2 Add swap (required on t3.micro for Ollama)
 
-t2.micro has only 1 GB RAM. Run the project swap script:
+t3.micro has only 1 GB RAM. Run the project swap script:
 
 ```bash
 # After cloning in 4.4, or run manually now:
@@ -511,7 +511,7 @@ sudo systemctl restart multidocrag-api
 
 1. Open your Vercel URL in the browser.
 2. **Sign up** with a test email/password.
-3. **Upload** a small PDF (1–5 pages). Wait 30–90 seconds on t2.micro.
+3. **Upload** a small PDF (1–5 pages). Wait 30–90 seconds on t3.micro.
 4. Click the PDF in the sidebar.
 5. Ask a question, e.g. *"What is this document about?"*
 6. Confirm you get an **answer** and **sources**.
@@ -605,7 +605,7 @@ Optional: record a 2-minute Loom/screen capture as backup.
 |---------|-----|
 | Can't find instance | Check correct **region** (top-right) |
 | HTTP blocked | Security group: inbound **80** and **443** from `0.0.0.0/0` |
-| Free tier warning | t2.micro + 30GB disk stays in free tier for 12 months |
+| Free tier warning | t3.micro + 30GB disk stays in free tier for 12 months |
 
 ### App errors
 
@@ -685,7 +685,7 @@ Vercel auto-redeploys on push if connected to GitHub.
 
 | Service | Cost |
 |---------|------|
-| AWS EC2 t2.micro | Free Tier 12 months, then ~$8–10/mo if kept running |
+| AWS EC2 t3.micro | Free Tier 12 months, then ~$8–10/mo if kept running |
 | Elastic IP | Free while attached to running instance |
 | Vercel | Free |
 | Groq API | Free tier |

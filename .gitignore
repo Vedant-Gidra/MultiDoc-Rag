@@ -4,3 +4,5 @@ Backend/chroma_db/
 Backend/.env
 Backend/app.db
 Backend/storage/
+
+deploy/*.pem
