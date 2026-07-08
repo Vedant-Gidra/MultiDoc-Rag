@@ -221,8 +221,10 @@ Use this Elastic IP everywhere instead of the temporary public IP.
 Replace `YOUR_EC2_IP` with your Public or Elastic IP.
 
 ```powershell
-ssh -i "$env:USERPROFILE\.ssh\multidocrag-key.pem" ubuntu@YOUR_EC2_IP
+ssh -i "C:\path\to\multidocrag-key.pem" ubuntu@YOUR_EC2_IP
 ```
+
+Use your actual `.pem` path. If you saved it in the project folder, replace the path accordingly.
 
 First connect asks `Are you sure you want to continue connecting?` → type **yes**.
 
@@ -297,6 +299,8 @@ cd ~
 git clone https://github.com/YOUR_GITHUB_USERNAME/MultiDocRag.git
 cd MultiDocRag
 ```
+
+If the folder name on the server is different (for example `MultiDoc-Rag`), use that actual folder name in later commands.
 
 Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username.
 
@@ -396,7 +400,7 @@ sudo cp ~/MultiDocRag/deploy/nginx-multidocrag.conf /etc/nginx/sites-available/m
 sudo nano /etc/nginx/sites-available/multidocrag
 ```
 
-Change the `server_name` line to your EC2 public IP (or domain later):
+Change the `server_name` line to your EC2 Elastic IP first, then later replace it with your domain once DNS is pointed at the instance:
 
 ```nginx
 server_name YOUR_EC2_PUBLIC_IP;
@@ -405,7 +409,13 @@ server_name YOUR_EC2_PUBLIC_IP;
 Example:
 
 ```nginx
-server_name 3.110.45.67;
+server_name 15.206.48.42;
+```
+
+After you have a domain, use:
+
+```nginx
+server_name api.yourdomain.com;
 ```
 
 Enable site:
@@ -463,11 +473,11 @@ http://YOUR_EC2_IP
 
 | Name | Value |
 |------|--------|
-| `VITE_API_URL` | `http://YOUR_EC2_IP` |
+| `VITE_API_URL` | `https://api.YOURDOMAIN.com` |
 
-Example: `http://3.110.45.67`
+Example: `https://api.yourdomain.com`
 
-> Vite bakes this into the build. If you change it later, you must **redeploy**.
+> If you are still testing before HTTPS is configured, you may temporarily use `http://YOUR_EC2_IP`, but a live Vercel deployment will need HTTPS to avoid mixed-content errors. Vite bakes this into the build, so if you change it later, you must **redeploy**.
 
 5. Click **Deploy**.
 6. Wait ~1–2 minutes. Copy your live URL, e.g. `https://multidocrag.vercel.app`.
@@ -524,6 +534,12 @@ Invoke-RestMethod http://YOUR_EC2_IP/health
 
 # Frontend loads (should return 200)
 Invoke-WebRequest https://YOUR_VERCEL_URL.vercel.app -UseBasicParsing | Select-Object StatusCode
+```
+
+After HTTPS is configured on EC2, replace the backend check with:
+
+```powershell
+Invoke-RestMethod https://api.YOURDOMAIN.com/health
 ```
 
 ---
@@ -672,7 +688,7 @@ Vercel auto-redeploys on push if connected to GitHub.
 | What | Where / Value |
 |------|----------------|
 | EC2 SSH | `ssh -i ~/.ssh/multidocrag-key.pem ubuntu@YOUR_EC2_IP` |
-| API health | `http://YOUR_EC2_IP/health` |
+| API health | `http://YOUR_EC2_IP/health` or `https://api.YOURDOMAIN.com/health` after HTTPS |
 | Frontend | `https://your-app.vercel.app` |
 | Env on EC2 | `~/MultiDocRag/Backend/.env` |
 | API logs | `journalctl -u multidocrag-api -f` |
